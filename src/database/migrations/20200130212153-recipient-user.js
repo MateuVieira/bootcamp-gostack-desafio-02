@@ -15,8 +15,8 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      número: {
-        type: Sequelize.STRING,
+      numero: {
+        type: Sequelize.INTEGER,
         allowNull: false,
       },
       complemento: {
