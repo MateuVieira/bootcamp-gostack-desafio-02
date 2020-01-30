@@ -13,7 +13,7 @@ class RecipientController {
       complemento: Yup.string(),
       estado: Yup.string().required(),
       cidade: Yup.string().required(),
-      CEP: Yup.string()
+      cep: Yup.string()
         .required()
         .length(9),
     });
@@ -22,20 +22,13 @@ class RecipientController {
       return res.status(400).json({ error: 'Validation faild' });
     }
 
-    const RecipientExists = await Recipient.findOne({
-      where: { email: req.body.email },
-    });
-
-    if (RecipientExists) {
-      return res.status(400).json({ error: 'Recipient already exists' });
-    }
-
-    const { id, name, email } = await Recipient.create(req.body);
+    const { id, name, estado, cidade } = await Recipient.create(req.body);
 
     return res.json({
       id,
       name,
-      email,
+      estado,
+      cidade,
     });
   }
 

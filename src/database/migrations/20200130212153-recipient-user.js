@@ -31,7 +31,7 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      CEP: {
+      cep: {
         type: Sequelize.STRING,
         allowNull: false,
       },
