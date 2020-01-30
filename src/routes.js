@@ -17,5 +17,6 @@ routes.use(autgMiddleware);
 routes.put('/users', UserController.update);
 
 routes.post('/repicients', RecipientController.store);
+routes.put('/repicients', RecipientController.update);
 
 export default routes;

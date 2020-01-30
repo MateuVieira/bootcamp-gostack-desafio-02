@@ -34,29 +34,37 @@ class RecipientController {
 
   async update(req, res) {
     const schema = Yup.object().shape({
+      id: Yup.number()
+        .positive()
+        .required(),
       name: Yup.string(),
-      email: Yup.string().email(),
-      password: Yup.string()
-        .min(6)
-        .when('old_password', (old_password, field) =>
-          old_password ? field.required() : field
-        ),
-      confirm_password: Yup.string('passowrd', (password, field) =>
-        password ? field.required().oneOf([Yup.ref('password')]) : field
-      ),
+      rua: Yup.string(),
+      numero: Yup.number().positive(),
+      complemento: Yup.string(),
+      estado: Yup.string(),
+      cidade: Yup.string(),
+      cep: Yup.string().length(9),
     });
 
     if (!(await schema.isValid(req.body))) {
       return res.status(400).json({ error: 'Validation faild' });
     }
 
-    const recipient = await Recipient.findByPk(req.RecipientId);
+    const { id } = req.body;
 
-    const { id, name } = await recipient.update(req.body);
+    const recipient = await Recipient.findByPk(id);
+
+    if (!recipient) {
+      return res.status(400).json({ error: 'Id invalid' });
+    }
+
+    const { name, estado, cidade } = await recipient.update(req.body);
 
     return res.json({
       id,
       name,
+      estado,
+      cidade,
     });
   }
 }
