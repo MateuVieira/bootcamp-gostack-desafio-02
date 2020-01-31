@@ -4,16 +4,19 @@ import User from '../models/Users';
 
 class UserController {
   async store(req, res) {
+    // If the help of Yup builder a schema to validate the request fields
     const schema = Yup.object().shape({
       name: Yup.string().required(),
       email: Yup.string()
         .email()
         .required(),
+      // Password must be longer than 5 digits
       password: Yup.string()
         .required()
         .min(6),
     });
 
+    // Compare the schema with request fields
     if (!(await schema.isValid(req.body))) {
       return res.status(400).json({ error: 'Validation faild' });
     }
@@ -34,6 +37,7 @@ class UserController {
   }
 
   async update(req, res) {
+    // If the help of Yup builder a schema to validate the request fields
     const schema = Yup.object().shape({
       name: Yup.string(),
       email: Yup.string().email(),
